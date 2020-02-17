@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Sample Table</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script> 
+   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+   <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+
+<script type="text/x-handlebars-template" id="tableTemplate">
+<table class="table borderless"  >
+<thead>
+  <tr>
+    {{#each array.[0]}}
+      <th scope="col" >{{@key}}</th>
+    {{/each}}
+  </tr>
+</thead>
+<tbody>
+  {{#each array}}
+    <tr style="border-top-style: solid;border-color: #EEEEEE;border-width: thin;" >
+        {{#each this}}
+        <td>{{this}}</td>
+      {{/each}}
+    </tr>
+  {{/each}}
+</tbody>
+</table>
+</script>
+
+<script>
+$(function() {  
+
+var templateText = $("#tableTemplate").html();
+var tableTemplate = Handlebars.compile(templateText); 
+    
+$('#clickme').click(function() {
+$.getJSON("https://aimtell.com/files/sites.json",
+        function(data){  
+        
+       //var myJSON = JSON.stringify(data);
+       //document.getElementById("demo").innerHTML = myJSON;
+        
+       var i;
+       var  site = {};
+       var sites = []; 
+       for (i = 0; i < data.count; i++) {   
+       site = {};
+       site['id'] = data.sites[i].id;
+       site['name'] =data.sites[i].name;
+       site['url'] =data.sites[i].url;
+       console.log("TAGS"+site['id']+":"+site['name']+":"+site['url'] ); 
+       sites.push(site);                         }         
+     
+  
+    $("#sites").html(tableTemplate({ array: sites }));
+        
+});
+
+}); //end of clickme
+}); //end of function
+</script>
+
+<style>
+
+
+.borderless td, .borderless th {
+    border: none;
+}
+
+.px {
+   padding-left: 20px !important; 
+   padding-right: 20px !important; 
+}
+
+.pxr {
+  padding-left: 85% !important; 
+}
+ 
+ td:first-child {
+  font-weight: bold;    
+}
+ 
+}
+</style>
+
+</head>
+<body>
+  <br>
+  <div class="row px">
+   <div class="col">  
+  <h2  class="mx-auto" style="width: 200px;font-weight: 800;" >Sample&nbsp;Table</h2>
+    </div>
+</div>  
+<div class="row px">
+   <div class="col col-md-10">
+  <p>You should be able to recreate this table. By default , the content of the table should be empty. When you click the button, it should fectch the data located at https://aimtell.com/files/sites.json using Ajax and insert it into the page using HANDLEBARS.</p>            
+  </div>
+  <div class="col" >           
+  </div>
+</div>
+<div class="row px"> 
+    <div class="col col-sm-2 pxr"><a class="btn btn-info" style="font-weight: 800;" href="#" id="clickme">Load&nbsp;Data</a></div>
+</div>  
+<div class="row px">
+   <div id="sites" class="col col-lg-12" >
+<!-- Start Of Empty Table --> 
+   <table class="table borderless">
+<thead>
+  <tr>
+      <th scope="col">id</th>
+      <th scope="col">name</th>
+      <th scope="col">url</th>
+  </tr>
+</thead>
+<tbody>
+    <tr style="border-top-style: solid;border-color: #EEEEEE;border-width: thin;">
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr style="border-top-style: solid;border-color: #EEEEEE;border-width: thin;">
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr style="border-top-style: solid;border-color: #EEEEEE;border-width: thin;">
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+</tbody>
+</table>
+<!-- End Of Empty Table --> 
+   
+   </div>
+</div>
+
+
+</body>
+</html>
